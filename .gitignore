@@ -3,5 +3,5 @@
 
 # Project exclude paths
 /backend/node_modules/
-/client/node_modules/
-/admin-app/node_modules/
+/client1/node_modules/
+/frontend/admin-app/node_modules/
