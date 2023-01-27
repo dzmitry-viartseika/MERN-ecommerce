@@ -1,10 +1,15 @@
-import TheBaseButton from './components/Elements/Buttons/TheBaseButton'
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import LoginPage from "./pages/Login";
 
 function App() {
   return (
     <div className="App">
-      <TheBaseButton type={'submit'} buttonText={'save'} onClick={() => alert('wertey')}></TheBaseButton>
+        <Router>
+            <Routes>
+                <Route exact path="/login" element={<LoginPage/>}/>
+            </Routes>
+        </Router>
     </div>
   );
 }
