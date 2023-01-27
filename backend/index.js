@@ -13,8 +13,8 @@ const cors = require("cors");
 dotenv.config();
 
 mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log("DB Connection Successfull!"))
+  .connect(process.env.MONGO_DB_URL)
+  .then(() => console.log("DB Connection Successfully!", process.env.MONGO_DB_URL))
   .catch((err) => {
     console.log(err);
   });
