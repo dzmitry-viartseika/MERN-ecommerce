@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+import TheBaseButton from "../components/Elements/Buttons/TheBaseButton";
+import { useState } from "react";
+import {login} from "../services/User/UserService";
+import {useDispatch ,useSelector} from "react-redux";
+import { useHistory } from "react-router"
 
 const Container = styled.div`
   width: 100vw;
@@ -38,39 +43,48 @@ const Form = styled.form`
 //   padding: 10px;
 // `;
 //
-// const Button = styled.button`
-//   width: 40%;
-//   border: none;
-//   padding: 15px 20px;
-//   background-color: teal;
-//   color: white;
-//   cursor: pointer;
-//   margin-bottom: 10px;
-//   &:disabled {
-//     color: green;
-//     cursor: not-allowed;
-//   }
-// `;
-//
-// const Link = styled.a`
-//   margin: 5px 0px;
-//   font-size: 12px;
-//   text-decoration: underline;
-//   cursor: pointer;
-// `;
 
-// const Error = styled.span`
-//   color: red;
-// `;
+//
+const Link = styled.a`
+  margin: 5px 0;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+`;
+
+const Error = styled.span`
+  color: red;
+`;
 
 const LoginPage = () => {
+    const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
+
+    const { isFetching, error } = useSelector((state) => state.user);
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    const loginUser = async (e) => {
+        e.preventDefault();
+        await login(dispatch, { username: userName, password });
+    }
+
+    const proceedToRegistration = () => {
+        history.push('/register')
+    }
+
     return(
         <div className={'login-page'}>
             <Container>
                 <Wrapper>
                     <Title>SIGN IN</Title>
                     <Form>
-                        FORM
+                        <input type="text" onChange={(e) => setUserName(e.target.value)}/>
+                        <input type="password" onChange={(e) => setPassword(e.target.value)}/>
+                        <TheBaseButton disabled={isFetching} buttonText={'Login'} onClick={loginUser}/>
+                        {error && <Error>Something went wrong...</Error>}
+                        <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+                        <Link onClick={proceedToRegistration}>CREATE A NEW ACCOUNT</Link>
                     </Form>
                 </Wrapper>
             </Container>
