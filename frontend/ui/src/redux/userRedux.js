@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
     name: 'user',
     initialState: {
         currentUser: null,
         isFetching: false,
-        error: false,
+        errorMessage: false,
     },
     reducers: {
         loginStart: (state) => {
@@ -16,8 +16,9 @@ const userSlice = createSlice({
             state.currentUser = action.payload;
         },
         loginFailure: (state) => {
+            console.log('loginFailure')
             state.isFetching = false;
-            state.error = true;
+            state.errorMessage = true;
         },
     },
 });

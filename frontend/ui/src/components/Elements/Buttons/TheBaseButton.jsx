@@ -4,8 +4,8 @@ const Button = styled.button`
   width: 40%;
   border: none;
   padding: 15px 20px;
-  background-color: teal;
-  color: white;
+  background-color: $colorBtn;
+  color: $color-primary;
   cursor: pointer;
   margin-bottom: 10px;
   
@@ -14,9 +14,17 @@ const Button = styled.button`
     cursor: not-allowed;
   }
 `;
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
 const TheBaseButton = ({ type = 'button', buttonText = 'Button', onClick, disabled }) => {
     return (
-        <Button onClick={onClick} type={type} disabled={disabled}> { buttonText } </Button>
+        <Wrapper>
+            <Button onClick={onClick} type={type} disabled={disabled}> { buttonText } </Button>
+        </Wrapper>
     )
 }
 

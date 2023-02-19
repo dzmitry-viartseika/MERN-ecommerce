@@ -2,14 +2,12 @@ import { loginFailure, loginStart, loginSuccess } from "../../redux/userRedux";
 import { publicRequest } from "../RequestMethods";
 
 export const login = async (dispatch, user) => {
-    console.log('user', user)
+    console.log('loginStart')
     dispatch(loginStart());
     try {
-        const result = await publicRequest.post("/auth/login", user);
-        console.log('result', result.data)
+        const result = await publicRequest.post('/auth/login', user);
         dispatch(loginSuccess(result.data));
     } catch (err) {
-        console.log('weee')
         dispatch(loginFailure());
     }
 };

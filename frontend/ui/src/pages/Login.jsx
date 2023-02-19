@@ -36,15 +36,13 @@ const Form = styled.form`
   flex-direction: column;
 `;
 
-// const Input = styled.input`
-//   flex: 1;
-//   min-width: 40%;
-//   margin: 10px 0;
-//   padding: 10px;
-// `;
-//
+const Input = styled.input`
+  flex: 1;
+  min-width: 40%;
+  margin: 10px 0;
+  padding: 10px;
+`;
 
-//
 const Link = styled.a`
   margin: 5px 0;
   font-size: 12px;
@@ -59,8 +57,10 @@ const Error = styled.span`
 const LoginPage = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-
-    const { isFetching, error } = useSelector((state) => state.user);
+    const { isFetching, errorMessage, currentUser } = useSelector((state) => state.user);
+    console.log('currentUser', currentUser)
+    console.log('error', errorMessage)
+    console.log('isFetching', isFetching)
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -79,10 +79,10 @@ const LoginPage = () => {
                 <Wrapper>
                     <Title>SIGN IN</Title>
                     <Form>
-                        <input type="text" onChange={(e) => setUserName(e.target.value)}/>
-                        <input type="password" onChange={(e) => setPassword(e.target.value)}/>
+                        <Input type="text" onChange={(e) => setUserName(e.target.value)}/>
+                        <Input type="password" onChange={(e) => setPassword(e.target.value)}/>
                         <TheBaseButton disabled={isFetching} buttonText={'Login'} onClick={loginUser}/>
-                        {error && <Error>Something went wrong...</Error>}
+                        {errorMessage && <Error>Something went wrong...</Error>}
                         <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
                         <Link onClick={proceedToRegistration}>CREATE A NEW ACCOUNT</Link>
                     </Form>
