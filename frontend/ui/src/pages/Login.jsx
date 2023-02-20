@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import TheBaseButton from "../components/Elements/Buttons/TheBaseButton";
 import { useState } from "react";
-import {login} from "../services/User/UserService";
-import {useDispatch ,useSelector} from "react-redux";
+import {useDispatch } from "react-redux";
 import { useHistory } from "react-router"
+import {useLogin} from "../hooks/useLogin";
 
 const Container = styled.div`
   width: 100vw;
@@ -50,23 +50,15 @@ const Link = styled.a`
   cursor: pointer;
 `;
 
-const Error = styled.span`
-  color: red;
-`;
-
 const LoginPage = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const { isFetching, errorMessage, currentUser } = useSelector((state) => state.user);
-    console.log('currentUser', currentUser)
-    console.log('error', errorMessage)
-    console.log('isFetching', isFetching)
-    const dispatch = useDispatch()
+    const [loginUser, isLoading] = useLogin()
     const history = useHistory()
 
-    const loginUser = async (e) => {
-        e.preventDefault();
-        await login(dispatch, { username: userName, password });
+    const login = async (e) => {
+        e.preventDefault()
+        await loginUser(userName, password)
     }
 
     const proceedToRegistration = () => {
@@ -79,10 +71,10 @@ const LoginPage = () => {
                 <Wrapper>
                     <Title>SIGN IN</Title>
                     <Form>
-                        <Input type="text" onChange={(e) => setUserName(e.target.value)}/>
-                        <Input type="password" onChange={(e) => setPassword(e.target.value)}/>
-                        <TheBaseButton disabled={isFetching} buttonText={'Login'} onClick={loginUser}/>
-                        {errorMessage && <Error>Something went wrong...</Error>}
+                        <Input type="text" placeholder='userName' onChange={(e) => setUserName(e.target.value)}/>
+                        <Input type="password" placeholder='password'  onChange={(e) => setPassword(e.target.value)}/>
+                        <TheBaseButton disabled={isLoading} buttonText={'Login'} onClick={login}/>
+                        {/*{errorMessage && <Error>Something went wrong...</Error>}*/}
                         <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
                         <Link onClick={proceedToRegistration}>CREATE A NEW ACCOUNT</Link>
                     </Form>
